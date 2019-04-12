@@ -12,6 +12,7 @@ export class Bot {
     public init() {
         this.client.on("ready", () => {
             this.client.user.setStatus("online");
+            this.client.user.setActivity("with TypeScript", { type: "PLAYING" });
         });
 
         this.client.login(this.token);
