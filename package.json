@@ -9,6 +9,7 @@
     },
     "author": "James Cook",
     "devDependencies": {
+        "axios": "^0.18.0",
         "tslint": "^5.15.0",
         "typescript": "^3.4.3"
     },
