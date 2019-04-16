@@ -30,7 +30,7 @@ export class Bot {
                 const args = splitText.slice(1);
                 if (command.toLowerCase() === "weather") {
                     const response = await this.requestHandler.HandleRequest(args[0]);
-                    const reply = this.messageBuilder.createMessage(response);
+                    const reply = this.messageBuilder.createFiveDayMessage(response);
                     message.reply(reply);
                 }
             }
