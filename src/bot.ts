@@ -30,8 +30,16 @@ export class Bot {
                 const args = splitText.slice(1);
                 if (command.toLowerCase() === "weather") {
                     const response = await this.requestHandler.HandleRequest(args[0]);
-                    const reply = this.messageBuilder.createFiveDayMessage(response);
-                    message.reply(reply);
+                    let reply: discord.RichEmbed;
+                    reply = this.messageBuilder.createCurrentMessage(response);
+
+                    // if (args[0] === "current") {
+                    //     reply = this.messageBuilder.createCurrentMessage(response);
+                    // } else if (args[0] === "5") {
+                    //     reply = this.messageBuilder.createFiveDayMessage(response);
+                    // }
+
+                    message.channel.send(reply);
                 }
             }
         });
