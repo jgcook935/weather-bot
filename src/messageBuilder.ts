@@ -1,12 +1,15 @@
+import * as discord from "discord.js";
+
 export class MessageBuilder {
-    public createCurrentMessage(response: any) {
+    public createCurrentMessage(response: any): discord.RichEmbed {
         const data = response[0];
-        const temperature = `Temperature: ${data["Temperature"]["Imperial"]["Value"]} F`;
-        const realFeel = `Real Feel Temperature: ${data["RealFeelTemperature"]["Imperial"]["Value"]} F`;
-        const visibility = `Visibility: ${data["WeatherText"]}`;
-        const windSpeed = `Wind Speed: ${data["Wind"]["Speed"]["Imperial"]["Value"]} MPH`;
-        const windChill = `Wind Chill Temperature: ${data["WindChillTemperature"]["Imperial"]["Value"]} F`;
-        return `${temperature} - ${realFeel} - ${visibility} - ${windSpeed} - ${windChill}`;
+        return new discord.RichEmbed()
+            .setTitle("Current Forecast")
+            .addField("Temperature", `${data["Temperature"]["Imperial"]["Value"]} F`)
+            .addField("Real Feel Temperature", `${data["RealFeelTemperature"]["Imperial"]["Value"]} F`)
+            .addField("Visibility", data["WeatherText"])
+            .addField("Wind Speed", `${data["Wind"]["Speed"]["Imperial"]["Value"]} MPH`)
+            .addField("Wind Chill Temperature", `${data["WindChillTemperature"]["Imperial"]["Value"]} F`);
     }
 
     public createSingleDay(day: any): string {
