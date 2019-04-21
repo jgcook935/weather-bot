@@ -19,7 +19,7 @@ export class Bot {
     public init() {
         this.client.on("ready", () => {
             this.client.user.setStatus("online");
-            this.client.user.setActivity("with TypeScript", { type: "PLAYING" });
+            this.client.user.setActivity("the sky", { type: "WATCHING" });
         });
 
         this.client.on("message", async message => {
@@ -29,23 +29,23 @@ export class Bot {
                 const command = splitText[0];
                 const args = splitText.slice(1);
                 if (command.toLowerCase() === "weather") {
-                    if (args[0] === "current") {
+                    if (args[0] === "current" || args[0] === "c") {
                         message.channel.send(
                             this.messageBuilder.createCurrentMessage(
                                 await this.httpClient.getCurrent()
                             )
                         );
-                    } else if (args[0] === "five") {
+                    } else if (args[0] === "five" || args[0] === "f") {
                         const replies = this.messageBuilder.createFiveDayMessage(
                             await this.httpClient.getFiveDay()
                         );
                         for (const reply of replies) {
                             message.channel.send(reply);
                         }
+                    } else if (args[0] === "help" || args[0] === "h") {
+                        message.channel.send(this.messageBuilder.createHelpMessage());
                     } else {
-                        message.channel.send(
-                            new discord.RichEmbed().setTitle("Invalid argument. Try current or five next time.")
-                        );
+                        message.channel.send(this.messageBuilder.createInvalidMessage());
                     }
                 }
             }
