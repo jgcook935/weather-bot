@@ -1,19 +1,19 @@
 import * as discord from "discord.js";
 import { CommandProcessor } from "./commandProcessor";
 import { token } from "./config";
+import { HttpClient } from "./httpClient";
 import { MessageBuilder } from "./messageBuilder";
-import { RequestHandler } from "./requestHandler";
 
 export class Bot {
     private client: discord.Client;
+    private httpClient: HttpClient;
     private messageBuilder: MessageBuilder;
-    private requestHandler: RequestHandler;
     private token = token;
 
     constructor() {
         this.client = new discord.Client();
+        this.httpClient = new HttpClient();
         this.messageBuilder = new MessageBuilder();
-        this.requestHandler = new RequestHandler();
     }
 
     public init() {
@@ -29,11 +29,16 @@ export class Bot {
                 const command = splitText[0];
                 const args = splitText.slice(1);
                 if (command.toLowerCase() === "weather") {
-                    const response = await this.requestHandler.HandleRequest(args[0]);
                     if (args[0] === "current") {
-                        message.channel.send(this.messageBuilder.createCurrentMessage(response));
+                        message.channel.send(
+                            this.messageBuilder.createCurrentMessage(
+                                await this.httpClient.getCurrent()
+                            )
+                        );
                     } else if (args[0] === "five") {
-                        const replies = this.messageBuilder.createFiveDayMessage(response);
+                        const replies = this.messageBuilder.createFiveDayMessage(
+                            await this.httpClient.getFiveDay()
+                        );
                         for (const reply of replies) {
                             message.channel.send(reply);
                         }

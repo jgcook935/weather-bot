@@ -11,13 +11,8 @@ export class HttpClient {
         return await this.get(type, false);
     }
 
-    public async get5Day() {
+    public async getFiveDay() {
         const type: string = "forecasts/v1/daily/5day/";
-        return await this.get(type, true);
-    }
-
-    public async get10Day() {
-        const type: string = "forecasts/v1/daily/10day/";
         return await this.get(type, true);
     }
 
