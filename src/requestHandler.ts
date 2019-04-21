@@ -11,10 +11,8 @@ export class RequestHandler {
         let result: any;
         if (request === "current") {
             result = await this.httpClient.getCurrent();
-        } else if (request === "5") {
+        } else if (request === "five") {
             result = await this.httpClient.get5Day();
-        } else if (request === "10") {
-            result = await this.httpClient.get10Day();
         } else {
             result = "Your forecast request is invalid. Choose from: current, 5, 10";
         }
