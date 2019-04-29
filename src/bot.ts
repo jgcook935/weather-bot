@@ -31,14 +31,10 @@ export class Bot {
                 if (command.toLowerCase() === "weather") {
                     if (args[0] === "current" || args[0] === "c") {
                         message.channel.send(
-                            this.messageBuilder.createCurrentMessage(
-                                await this.httpClient.getCurrent()
-                            )
+                            this.messageBuilder.createCurrentMessage(await this.httpClient.getCurrent())
                         );
                     } else if (args[0] === "five" || args[0] === "f") {
-                        const replies = this.messageBuilder.createFiveDayMessage(
-                            await this.httpClient.getFiveDay()
-                        );
+                        const replies = this.messageBuilder.createFiveDayMessage(await this.httpClient.getFiveDay());
                         for (const reply of replies) {
                             message.channel.send(reply);
                         }
@@ -49,6 +45,10 @@ export class Bot {
                     }
                 }
             }
+        });
+
+        this.client.on("error", err => {
+            console.error(`Error: ${err}`);
         });
 
         this.client.login(this.token);
